@@ -8,8 +8,8 @@ logger = logging.getLogger(__name__)
 
 def print_header():
     print """
-time     latency uploaded  #c  tot $     fees $    store $   u/l $     d/l $
--------- ------- --------- --- --------- --------- --------- --------- ---------
+time     latency uploaded  #c a/i  tot $     fees $    store $   u/l $     d/l $
+-------- ------- --------- ------- --------- --------- --------- --------- ---------
 """.strip()
 
 
@@ -23,14 +23,16 @@ def print_state(state):
 
 def _make_console_string(state):
     return ('{timestamp} {api_latency:5d}ms {file_uploaded_bytes}'
-            ' {contract_count}'
+            ' {contract_count_active}'
+            ' {contract_count_inactive}'
             ' {contract_total_spending}'
             ' {renter_contract_fees}'
             ' {renter_storage_spending} {renter_upload_spending} {renter_download_spending}').format(
                 timestamp=_format_timestamp(state),
                 api_latency=int(state.api_latency),
                 file_uploaded_bytes=_format_bytes(state.file_uploaded_bytes),
-                contract_count=_format_contract_count(state.contract_count),
+                contract_count_active=_format_contract_count(state.contract_count_active),
+                contract_count_inactive=_format_contract_count(state.contract_count_inactive),
                 contract_total_spending=_format_hastings(state.contract_total_spending),
                 renter_contract_fees=_format_hastings(state.renter_contract_fees),
                 renter_storage_spending=_format_hastings(state.renter_storage_spending),

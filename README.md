@@ -90,41 +90,41 @@ The total number of files the user is storing on Sia (includes both fully and pa
 
 **Source**: [GET /renter/files](https://github.com/NebulousLabs/Sia/blob/master/doc/api/Renter.md#renterfiles-get)
 
-### `uploads_in_progress_count`
+### `file_uploads_in_progress_count`
 
 The total number of files that are known to Sia, but whose upload progress is below 100%.
 
 **Source**: [GET /renter/files](https://github.com/NebulousLabs/Sia/blob/master/doc/api/Renter.md#renterfiles-get)
 
-### `total_contract_size`
+### `contract_total_size`
 
 **Source**: [GET /renter/contracts](https://github.com/NebulousLabs/Sia/blob/master/doc/api/Renter.md#rentercontracts-get)
 
-### `total_file_bytes`
+### `file_total_bytes`
 
 The total number of file bytes uploaded to Sia. This is `filesize * (uploadprogress / 100)`. This number is imprecise for partially uploaded files because the Sia API only offers upload progress rounded to the nearest hundredth.
 
 **Source**: [GET /renter/files](https://github.com/NebulousLabs/Sia/blob/master/doc/api/Renter.md#renterfiles-get)
 
-### `uploaded_bytes`
+### `file_uploaded_bytes`
 
 The total number of data bytes uploaded to Sia across all files, including redundant file copies. This only represents the amount of actual file data uploaded through the renter and does not represent the total number of bytes Sia has sent to the network. This does not include bytes from files that have since been deleted from Sia.
 
 **Source**: [GET /renter/files](https://github.com/NebulousLabs/Sia/blob/master/doc/api/Renter.md#renterfiles-get)
 
-### `total_contract_spending`
+### `contract_total_spending`
 
 Total amount of Siacoins (in hastings) spent on contracts, across all active contracts.
 
 The following equality should always hold:
 
 ```
-total_contract_spending ==
+contract_total_spending ==
   contract_fee_spending +
-  storage_spending      +
-  upload_spending       +
-  download_spending     +
-  remaining_renter_funds
+  contract_storage_spending      +
+  contract_upload_spending       +
+  contract_download_spending     +
+  contract_remaining_funds
 ```
 
 **Source**: [GET /renter/contracts](https://github.com/NebulousLabs/Sia/blob/master/doc/api/Renter.md#rentercontracts-get)
@@ -135,25 +135,25 @@ Total amount of Siacoins (in hastings) spent on contract fees, across all active
 
 **Source**: [GET /renter/contracts](https://github.com/NebulousLabs/Sia/blob/master/doc/api/Renter.md#rentercontracts-get)
 
-### `storage_spending`
+### `contract_storage_spending`
 
 Total amount of Siacoins (in hastings) spent on storage, across all active contracts.
 
 **Source**: [GET /renter/contracts](https://github.com/NebulousLabs/Sia/blob/master/doc/api/Renter.md#rentercontracts-get)
 
-### `upload_spending`
+### `contract_upload_spending`
 
 Total amount of Siacoins (in hastings) spent on upload bandwidth, across all active contracts.
 
 **Source**: [GET /renter/contracts](https://github.com/NebulousLabs/Sia/blob/master/doc/api/Renter.md#rentercontracts-get)
 
-### `download_spending`
+### `contract_download_spending`
 
 Total amount of Siacoins (in hastings) spent on download bandwidth, across all active contracts.
 
 **Source**: [GET /renter/contracts](https://github.com/NebulousLabs/Sia/blob/master/doc/api/Renter.md#rentercontracts-get)
 
-### `remaining_renter_funds`
+### `contract_remaining_funds`
 
 Total amount of Siacoins (in hastings) that is allocated to active renter contracts, but has not yet been spent on fees, storage, upload, or download.
 

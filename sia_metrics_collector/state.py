@@ -30,9 +30,10 @@ Fields:
         all bytes have necessarily been uploaded to Sia yet.
     file_uploads_in_progress_count: Number of uploads currently in progress.
     file_uploaded_bytes: Total number of bytes that have been uploaded
-    contract_count: Number of active Sia contracts.
+    contract_count_active: Number of active Sia contracts.
+    contract_count_inactive: Number of inactive Sia contracts.
     contract_total_size: Total size of all Sia contracts (this should be
-        equal to uploaded_bytes, but the data come from different
+        equal to file_uploaded_bytes, but the data come from different
         sources).
         across all files.
     contract_total_spending: Total amount of money (in hastings) spent
@@ -71,7 +72,8 @@ SiaState = recordtype.recordtype(
         'file_total_bytes',
         'file_uploads_in_progress_count',
         'file_uploaded_bytes',
-        'contract_count',
+        'contract_count_active',
+        'contract_count_inactive',
         'contract_total_size',
         'contract_total_spending',
         'contract_fee_spending',
@@ -140,7 +142,8 @@ class Builder(object):
 
         active_contracts = response[u'activecontracts']
         inactive_contracts = response[u'inactivecontracts']
-        state.contract_count = len(active_contracts) + len(inactive_contracts)
+        state.contract_count_active = len(active_contracts)
+        state.contract_count_inactive = len(inactive_contracts)
         state.contract_total_size = 0
         state.contract_total_spending = 0
         state.contract_fee_spending = 0
