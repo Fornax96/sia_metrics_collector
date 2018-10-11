@@ -133,12 +133,14 @@ class Builder(object):
 
     def _populate_contract_metrics(self, state):
         response = self._sia_api.get_renter_contracts()
-        if not response or not response.has_key(u'contracts'):
+        if not response or not response.has_key(u'activecontracts'):
             logger.error('Failed to query contracts information: %s',
                          json.dumps(response))
             return
-        contracts = response[u'contracts']
-        state.contract_count = len(contracts)
+
+        active_contracts = response[u'activecontracts']
+        inactive_contracts = response[u'inactivecontracts']
+        state.contract_count = len(active_contracts) + len(inactive_contracts)
         state.contract_total_size = 0
         state.contract_total_spending = 0
         state.contract_fee_spending = 0
@@ -146,7 +148,7 @@ class Builder(object):
         state.contract_upload_spending = 0
         state.contract_download_spending = 0
         state.contract_remaining_funds = 0
-        for contract in contracts:
+        for contract in active_contracts + inactive_contracts:
             state.contract_total_size += long(contract[u'size'])
             state.contract_total_spending += long(contract[u'totalcost'])
             state.contract_fee_spending += long(contract[u'fees'])
